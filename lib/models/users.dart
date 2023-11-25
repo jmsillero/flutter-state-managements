@@ -3,5 +3,21 @@ class User {
   final int age;
   final List<String> jobs;
 
-  User({required this.name, required this.age, required this.jobs}); 
+  User({
+    required this.name,
+    required this.age,
+    required this.jobs,
+  });
+
+  User copyWith({
+    String? name,
+    int? age,
+    List<String>? jobs,
+  }) {
+    return User(
+      name: name ?? this.name,
+      age: age ?? this.age,
+      jobs: jobs ?? this.jobs,
+    );
+  }
 }
