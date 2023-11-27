@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:state_managements/bloc/users/cubit/user_cubit.dart';
 
 class Page1Page extends StatelessWidget {
   const Page1Page({super.key});
@@ -9,30 +11,39 @@ class Page1Page extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Page 1'),
       ),
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        child: const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
+      body: BlocBuilder<UserCubit, UserState>(
+        builder: (context, state) {
+          if (state is UserInitial) {
+            return const Center(
+              child: Text('User not found'),
+            );
+          }
+          final newState = state as UserActive;
+          return Container(
+            padding: const EdgeInsets.all(20),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Text(
                 "General",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              Divider(),
-              ListTile(title: Text('Name: ')),
+              const Divider(),
+              ListTile(title: Text('Name: ${newState.user.name}')),
               ListTile(
-                title: Text('Age: '),
+                title: Text('Age: ${newState.user.age}'),
               ),
-              Text(
+              const Text(
                 "Jobs",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              Divider(),
-              ListTile(title: Text('Name: ')),
-              ListTile(
+              const Divider(),
+              const ListTile(title: Text('Name: ')),
+              const ListTile(
                 title: Text('Age: '),
               )
             ]),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.abc),
